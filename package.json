@@ -1,0 +1,33 @@
+{
+  "name": "pamtech-group-redesign",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.13.0"
+  },
+  "scripts": {
+    "dev": "node scripts/next-local.mjs dev",
+    "dev:netlify": "next dev",
+    "build": "node scripts/next-local.mjs build",
+    "build:netlify": "next build",
+    "start": "next start",
+    "test": "npm run typecheck && npm run build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "next": "16.2.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
+  },
+  "devDependencies": {
+    "@next/swc-wasm-nodejs": "^16.2.6",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.4",
+    "eslint-config-next": "16.2.6",
+    "typescript": "5.9.3"
+  },
+  "type": "module"
+}
