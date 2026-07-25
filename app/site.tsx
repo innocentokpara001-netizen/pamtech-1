@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import {
+  AutopartsSequenceHero,
+  HomeSequenceHero,
+} from "./components/autoparts-sequence-hero";
 
 type Metric = {
   label: string;
@@ -656,32 +660,11 @@ export function SiteFooter() {
 export function HomePage() {
   return (
     <>
-      <section className="hero home-hero">
-        <div className="hero-media" />
-        <div className="hero-content reveal">
-          <p className="eyebrow">Celebrating 10+ Years Of Excellence</p>
-          <h1>Committed Service to Humanity</h1>
-          <p>
-            From energy and mobility to media, technology, and real estate, Pamtech Group is
-            transforming industries across Nigeria with innovation and excellence.
-          </p>
-          <div className="hero-actions">
-            <Link href="/business-lines" className="button primary">
-              Explore Business Lines
-            </Link>
-            <a href="#" className="button secondary">
-              Start a Conversation
-            </a>
-          </div>
-          <MetricStrip
-            metrics={[
-              { value: "7", label: "Business Lines" },
-              { value: "400+", label: "Team Members" },
-              { value: "10+", label: "Years" },
-            ]}
-          />
-        </div>
-      </section>
+      <HomeSequenceHero
+        label="After 10 Years of Excellent Committed Service To Humanity"
+        title="Pamtech Group is transforming industries across Nigeria with innovation and excellence"
+        summary="With 400+ Team Members and growing, we have built 7 Business Lines across Energy, Mobility, Media, Real Estate, and more — trusted by billions."
+      />
 
       <section className="trusted-band">
         <p>Trusted by leading organizations across Nigeria</p>
@@ -883,22 +866,30 @@ function BusinessIndexPage({ page }: { page: Page }) {
 function BusinessPage({ business }: { business: BusinessLine }) {
   return (
     <>
-      <section className="business-hero">
-        <div className="business-hero-copy">
-          <p className="eyebrow">{business.label}</p>
-          <h1>{business.name}</h1>
-          <p>{business.summary}</p>
-          <div className="hero-actions">
-            <a href="#" className="button primary">
-              {business.cta}
-            </a>
-            <Link href="/contact" className="button secondary-dark">
-              Contact Pamtech
-            </Link>
+      {business.slug === "autoparts" ? (
+        <AutopartsSequenceHero
+          label={business.label}
+          title={business.name}
+          summary={business.summary}
+        />
+      ) : (
+        <section className="business-hero">
+          <div className="business-hero-copy">
+            <p className="eyebrow">{business.label}</p>
+            <h1>{business.name}</h1>
+            <p>{business.summary}</p>
+            <div className="hero-actions">
+              <a href="#" className="button primary">
+                {business.cta}
+              </a>
+              <Link href="/contact" className="button secondary-dark">
+                Contact Pamtech
+              </Link>
+            </div>
           </div>
-        </div>
-        <img src={business.image} alt={business.imageAlt} />
-      </section>
+          <img src={business.image} alt={business.imageAlt} />
+        </section>
+      )}
 
       <section className="section split-section business-story">
         <div>
@@ -1114,24 +1105,11 @@ function BusinessGrid() {
   );
 }
 
-function MetricStrip({ metrics }: { metrics: Metric[] }) {
-  return (
-    <div className="metric-strip">
-      {metrics.map((metric) => (
-        <span key={metric.label}>
-          <strong>{metric.value}</strong>
-          {metric.label}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 function MetricGrid({ metrics, compact = false }: { metrics: Metric[]; compact?: boolean }) {
   return (
     <div className={compact ? "metric-grid compact" : "metric-grid"}>
       {metrics.map((metric) => (
-        <article key={metric.label}>
+        <article key={`${metric.value}-${metric.label}`}>
           <strong>{metric.value}</strong>
           <span>{metric.label}</span>
         </article>
